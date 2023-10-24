@@ -1,51 +1,58 @@
-import * as fs from 'node:fs'; // ES6 szintaktika, kell hozzá a package.json "type": "module"
-//const fs = require('fs') // ugyanolyan importálás, mint a felette lévő sor, eze  commonJS szintaktika
+console.log('loaded')
 
-/*//Synchronous (Sync) File Reading - txt fájlt 
-  try {
-  const data = fs.readFileSync('text.txt', 'utf8');
-  console.log(data);
-} catch (err) {
-  console.error('Error reading the file:', err);
+const rootElement = document.querySelector("#root")
+console.log(rootElement)
+
+/* rootElement.innerHTML = `
+    <h1>hello world</h1>
+    <div>
+        <p>lorem ipsum</p>
+        <h2>subtitle</h2>
+        <button>click me!</button>
+    </div>
+`
+
+const array = ["kismacska", "kutyus", "zebra", "kecske"] */
+
+/* const jsonLikeArray = [
+    {
+        countryName: "Hungary",
+        population: 8900000
+    },
+    {
+        countryName: "England",
+        population: 18000000
+    },
+    {
+        countryName: "USA",
+        population: 230000000
+    }
+]
+
+for (let i = 0; i < jsonLikeArray.length; i++) {
+    rootElement.innerHTML += `
+        <h3>name: ${jsonLikeArray[i].countryName}</h3>
+        <h4>population: ${jsonLikeArray[i].population}</h4>
+    `
 } */
 
+fetch("https://restcountries.com/v3.1/all") // ***(lent lerövidítve beírom kikommentezve)elküldjük adatért a JS-t, visszatér valamikor adattal
+    .then((res) => res.json()) // megjött az adat, de ki kell csomagolni, visszatér valamikor a kicsomagolt adattal; res = response, ez a data
+    .then((data) => { // megjött a kicsomagolt adat, innentől használhatjuk. Itt, ebben a then-ben tudjuk elérni az adatokat és manipulálni
+        console.log(data)
 
-/* //Asynchronous (Async) File Reading - txt fájlt
-import * as fs from 'node:fs';
+        for (let i = 0; i <data.length; i++) {
+            console.log(data[i].name.common)
+            console.log(data[i].population)
 
-fs.readFile('text.txt', 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading the file:', err);
-    return;
-  }
-  console.log(data);
-}); */
+            rootElement.innerHTML += `
+                <h3>country name: ${data[i].name.common}</h3>
+                <h4>country population: ${data[i].population}</h4>
+            `
+        }
+    })
 
-
-
-
-/* //Synchronous (Sync) File Reading and JSON Parsing
-try {
-  const data = fs.readFileSync('data.json', 'utf8');
-  const jsonData = JSON.parse(data);
-  console.log(jsonData);
-} catch (err) {
-  console.error('Error reading or parsing the JSON file:', err);
-} */
-
-
-
-//Asynchronous (Async) File Reading and JSON Parsing
-fs.readFile('data.json', 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading the JSON file:', err);
-    return;
-  }
-  
-  try {
-    const jsonData = JSON.parse(data);
-    console.log(jsonData);
-  } catch (err) {
-    console.error('Error parsing the JSON data:', err);
-  }
-});
+    / ***
+    fetch("https://restcountries.com/v3.1/all") 
+    .then((res) => res.json()) 
+    .then((data) => console.log(data)) */
