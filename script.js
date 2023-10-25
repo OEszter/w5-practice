@@ -1,58 +1,33 @@
 console.log('loaded')
 
 const rootElement = document.querySelector("#root")
-console.log(rootElement)
+console.log(rootElement) //kilogoltathatom a kulcsait az adatnak
 
-/* rootElement.innerHTML = `
-    <h1>hello world</h1>
-    <div>
-        <p>lorem ipsum</p>
-        <h2>subtitle</h2>
-        <button>click me!</button>
-    </div>
-`
+rootElement.innerHTML = "sziasztok"
 
-const array = ["kismacska", "kutyus", "zebra", "kecske"] */
-
-/* const jsonLikeArray = [
-    {
-        countryName: "Hungary",
-        population: 8900000
-    },
-    {
-        countryName: "England",
-        population: 18000000
-    },
-    {
-        countryName: "USA",
-        population: 230000000
-    }
-]
-
-for (let i = 0; i < jsonLikeArray.length; i++) {
-    rootElement.innerHTML += `
-        <h3>name: ${jsonLikeArray[i].countryName}</h3>
-        <h4>population: ${jsonLikeArray[i].population}</h4>
+const countryComponent = (country) => `
+    <div class="country">
+        <h2>country name: ${country.name.common}</h2>
+        <h3>country pop: ${country.population}</h3>
+   </div>
     `
-} */
 
-fetch("https://restcountries.com/v3.1/all") // ***(lent lerövidítve beírom kikommentezve)elküldjük adatért a JS-t, visszatér valamikor adattal
-    .then((res) => res.json()) // megjött az adat, de ki kell csomagolni, visszatér valamikor a kicsomagolt adattal; res = response, ez a data
-    .then((data) => { // megjött a kicsomagolt adat, innentől használhatjuk. Itt, ebben a then-ben tudjuk elérni az adatokat és manipulálni
-        console.log(data)
+async function init() {  // felkészítjük a JS-t, hogy a f-ben lesznek async kódok
+    const res = await fetch("https://restcountries.com/v3.1/all")  //megvárjuk a fetch válaszát (promise helyett)
+    const data = await res.json() //megvárjuk, hogy a response megjöjjön (promise helyett) => itt lesz elérhető az adatunk. Kimentettük egy változóba, és később használhatjuk
+    console.log(data)
 
-        for (let i = 0; i <data.length; i++) {
-            console.log(data[i].name.common)
-            console.log(data[i].population)
+    
 
-            rootElement.innerHTML += `
-                <h3>country name: ${data[i].name.common}</h3>
-                <h4>country population: ${data[i].population}</h4>
-            `
-        }
-    })
+    //data.forEach(country =>  rootElement.innerHTML += countryComponent(country)) // a lista végére fogja mindig hozzáadni az újabb elemet. Ha szeretnénk ezen változtatni:
+    //data.forEach(country =>  rootElement.innerHTML += countryComponent(country) + rootElement.innerHTML) // az elejéhez fűzze hozzá. De ez csűnya
 
-    /* ***
-    fetch("https://restcountries.com/v3.1/all") 
-    .then((res) => res.json()) 
-    .then((data) => console.log(data)) */
+  /*   rootElement.innerHTML="content";
+    rootElement.insertAdjacentHTML("beforeend", "new-content") */
+
+    data.forEach(country =>  rootElement.insertAdjacentHTML("beforeend", countryComponent(country)))
+    
+    
+}
+
+init()
