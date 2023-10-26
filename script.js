@@ -25,6 +25,15 @@ async function init() {
   data.forEach((country) =>
     rootElement.insertAdjacentHTML("beforeend", countryComponent(country))
   );
+
+  const countryElements = document.querySelectorAll("div.country")
+  countryElements.forEach((countryElement) => {
+    countryElement.addEventListener("click", () => {
+        countryElement.classList.toggle("clicked")
+    })
+
+  })
+
 }
 
 init();
