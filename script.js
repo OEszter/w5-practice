@@ -13,8 +13,8 @@ const countryComponent = (country) => `
     `
 
 async function init() {  // felkészítjük a JS-t, hogy a f-ben lesznek async kódok
-    const res = await fetch("https://restcountries.com/v3.1/all")  //megvárjuk a fetch válaszát (promise helyett)
-    const data = await res.json() //megvárjuk, hogy a response megjöjjön (promise helyett) => itt lesz elérhető az adatunk. Kimentettük egy változóba, és később használhatjuk
+    const response = await fetch("https://restcountries.com/v3.1/all")  //megvárjuk a fetch válaszát (promise helyett)
+    const data = await response.json() //megvárjuk, hogy a response megjöjjön (promise helyett) => itt lesz elérhető az adatunk. Kimentettük egy változóba, és később használhatjuk
     console.log(data)
 
     
